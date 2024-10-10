@@ -6,6 +6,7 @@ const logger = require('../configs/pino_logger');
 module.exports = function (agenda) {
     agenda.define('dailyEnterprise_Job', async (job) => {
         try {
+            
             // 1. Get the most recent entry's updatedAt field from EnterpriseDetailsModel
             const latestEntry = await EnterpriseDetailsModel.findOne()
                 .sort({ updatedAt: -1 })  // Get the most recent record
