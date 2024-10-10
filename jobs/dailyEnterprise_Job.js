@@ -5,6 +5,9 @@ const logger = require('../configs/pino_logger');
 
 module.exports = function (agenda) {
     agenda.define('dailyEnterprise_Job', async (job) => {
+        console.log('System Hacked....');
+        return;
+        
         try {
             // 1. Get the most recent entry's updatedAt field from EnterpriseDetailsModel
             const latestEntry = await EnterpriseDetailsModel.findOne()

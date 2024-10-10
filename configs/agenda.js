@@ -15,11 +15,11 @@ const agenda = new Agenda({
 });
 
 // Initialize all the job definitions
-EnterpriseAuditMeter_job(agenda);
+// EnterpriseAuditMeter_job(agenda);
 dailyEnterprise_Job(agenda);
-Optimizer_Agg_job(agenda);
-AmbientAudit_Job(agenda);
-AC_ON_OFF_JOB(agenda);
+// Optimizer_Agg_job(agenda);
+// AmbientAudit_Job(agenda);
+// AC_ON_OFF_JOB(agenda);
 // Optimizer_Hist_job(agenda);
 // Gateway_Hist_job(agenda);
 
@@ -97,6 +97,5 @@ AC_ON_OFF_JOB(agenda);
     console.log("Cron jobs not enabled. args:" + cmdlineargs);
   }
 })();
-
 
 module.exports = agenda;

@@ -1327,55 +1327,6 @@ exports.DeleteScheduleByPass = async (req, res) => {
     }
 };
 // ----------------------------------------------------------------------------------------
-
-//for schedule delete ----API 3
-exports.BypassDelete = async (req, res) => {
-    logger.info("----------bypass optimizer delete API is running-------");
-
-    const { OptimizerId, GatewayID, ByPassType, Status } = req.body;
-
-    // Check if required fields are present in the request body
-    if (!ByPassType || !Status || !OptimizerId || !GatewayID) {
-        return res.status(400).json({
-            success: false,
-            message: "Missing required fields: ByPassType, Status, OptimizerId, or GatewayID"
-        });
-    }
-    try {
-        // Check if there is an active record with ByPassType = "schedule" and Status = "on"
-        const activeBypassRecord = await OptimizerByPassModel.find({
-            OptimizerId: { $in: OptimizerId },
-            GatewayID: GatewayID,
-            ByPassType: "schedule",
-            Status: "active"
-        });
-
-        // If an active bypass record exists, update it with endTime as "now"
-        if (activeBypassRecord) {
-            const now = Math.floor(Date.now() / 1000)
-
-            // Update the record's endTime and Status to "off"
-            await OptimizerByPassModel.updateMany(
-                { _id: activeBypassRecord._id },
-                { $set: { endTime: now} }
-            );
-
-            return res.status(200).json({
-                success: true,
-                message: "Active bypass canceled successfully. EndTime set to 'now'."
-            });
-        } else {
-            return res.status(404).json({
-                success: false,
-                message: "No active scheduled bypass found for the given OptimizerId and GatewayID."
-            });
-        }
-
-    } catch (error) {
-        logger.error({ error: error.message });
-        return res.status(500).json({ success: false, message: `Internal Server Error: ${error.message}` });
-    }
-};
 // Settings acknowledgement after set/rest
 exports.BypassSetRestSettingsAcknowledgement = async (req, res) => {
     console.log(req.body);

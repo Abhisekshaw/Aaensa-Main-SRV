@@ -13,8 +13,9 @@ exports.ManualAcOnOffInsertion = async (req, res) => {
     const { OptimizerId, startTime, endTime } = req.body;
 
     const executeOnOffLogic = async (startTime, endTime, OptimizerId) => {
-        console.log("startTime" + startTime + " : endTime:" + endTime)
-        // return
+        // console.log(OptimizerId, startTime, endTime);
+        console.log("startTime" + startTime + " : endTime:" + endTime + " : OptimizerId:" + OptimizerId);
+        // return;
         try {
             const latestRecord = await findonoffRecord(startTime, endTime, OptimizerId);
             console.log(JSON.stringify(latestRecord));
@@ -141,20 +142,25 @@ exports.ManualAcOnOffInsertion = async (req, res) => {
             console.log(error);
         }
     }
-
+    executeOnOffLogic(startTime, endTime, OptimizerId);
     async function findonoffRecord(startTime, endTime, OptimizerId) {
 
         try {
             // const threeHoursAgo = startTime; // 3 hours ago
             // const currentTime = endTime; // Current time
+
+            // Convert Unix timestamp (in seconds) to JavaScript Date object
+            const startDate = moment.unix(startTime).toDate(); // Convert to date object
+            const endDate = moment.unix(endTime).toDate();     // Convert to date object
+
+
             const pipeline = [
                 {
                     $match: {
                         oid: new ObjectId(OptimizerId),
                         createdAt: {
-                            $gt: startTime,
-                            $lt: endTime
-
+                            $gt: startDate,
+                            $lt: endDate
                         }
                     }
                 },
@@ -430,7 +436,7 @@ exports.ManualAcOnOffInsertion = async (req, res) => {
                     }
                 }
             ];
-            console.log(util.inspect(pipeline, { showHidden: false, depth: null, colors: true }));
+            // console.log(util.inspect(pipeline, { showHidden: false, depth: null, colors: true }));
             const latestRecords = await OptimizerAgg.aggregate(pipeline).exec();
             return latestRecords;
         } catch (error) {

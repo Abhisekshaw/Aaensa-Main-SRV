@@ -13,13 +13,9 @@ const EnterpriseDetailsSchema = new mongoose.Schema({
         type: String,
     },
     locationname: { type: String },
-    gatewayId: {
-        type: String,
-    },
+    gatewayId: { type: String },
     gatewayname: { type: String },
-    optimizerId: {
-        type: String,
-    },
+    optimizerId: { type: String },
     optimizername: { type: String },
 }, { timestamps: true });
 

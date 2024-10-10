@@ -43,6 +43,7 @@
     "perf_hooks": "^0.0.1",
     "pino": "^9.3.2",
     "pino-pretty": "^11.2.2",
+    "punycode": "^2.3.1",
     "rotating-file-stream": "^3.2.3"
   }
 }
