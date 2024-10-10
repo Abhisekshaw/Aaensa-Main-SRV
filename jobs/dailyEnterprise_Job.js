@@ -31,8 +31,6 @@ module.exports = function (agenda) {
                 optimizerId: record.optimizerId,
                 optimizername: record.optimizerName,
             })));
-
-
         } catch (err) {
 
         }
